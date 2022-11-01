@@ -1,0 +1,91 @@
+﻿@model List<Book>
+
+@if (TempData["Message"] != null)
+{
+    <h5 class="alert alert-info">@TempData["Message"]</h5>
+}
+@if (Model.Count == 0)
+{
+    <h2 class="alert alert-danger text-center">No Book in DB yet</h2>
+    <h3 class="text-center">
+        <a class="btn btn-success" asp-controller="Book" asp-action="Add">Add</a>
+    </h3>
+    
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="h3 text-center" colspan="7">Book List</th>
+                <th>
+                    <a class="btn btn-success" asp-controller="Book" asp-action="Add">
+                        Add
+                    </a>
+                    <a class="btn btn-success" asp-controller="Book" asp-action="SortID">SortID</a>
+                </th>
+            </tr>
+            <tr>
+                <th class="text-center">
+                    Name
+                </th>
+                <th class="text-center">
+                    Price
+                </th>
+                <th class="text-center">
+                    Quantity
+                </th>
+                <th class="text-center">
+                    Author
+                </th>
+                <th class="text-center">
+                    Language
+                </th>
+                <th class="text-center">
+                    Publisher
+                </th>
+                <th class="text-center">
+                    Image
+                </th>
+                <th class="text-center">
+                    Menu
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var b in Model)
+            {
+                <tr>
+                    <td>
+                        @b.Name
+                    </td>
+                    <td>
+                        @b.Price
+                    </td>
+                    <td>
+                        @b.Quantity
+                    </td>
+                    <td>
+                        @b.Author
+                    </td>
+                    <td>
+                        @b.Language
+                    </td>
+                    <td>
+                        @b.Publisher
+                    </td>
+                    <td class="text-center">
+                        <a asp-controller="Book" asp-action="Detail" asp-route-id="@b.Id">
+                            <img src="@b.Image" width="80" height="130">
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn btn-warning" asp-controller="Book" asp-action="Edit" asp-route-id="@b.Id">Edit</a>
+                        <a onclick="return confirm('Are you sure?');" class="btn btn-danger" 
+                        asp-controller="Book" asp-action="Delete" asp-route-id="@b.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
